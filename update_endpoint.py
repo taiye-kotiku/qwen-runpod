@@ -60,7 +60,7 @@ def update_endpoint(endpoint_id: str, template_id: str, gpu_ids: str = "AMPERE_8
     variables = {
         "input": {
             "id": endpoint_id,
-            "name": "qwen2.5-7b-instruct",
+            "name": "qwen3.6-35b-a3b",
             "templateId": template_id,
             "gpuIds": gpu_ids,
             "workersMin": 0,

@@ -40,11 +40,6 @@ def gql(query: str, variables: dict = None) -> dict:
 def create_template() -> str:
     env_vars = [
         {"key": "MODEL_NAME", "value": MODEL_NAME},
-        {"key": "MAX_MODEL_LEN", "value": "32768"},
-        {"key": "GPU_MEMORY_UTILIZATION", "value": "0.95"},
-        {"key": "TENSOR_PARALLEL_SIZE", "value": "1"},
-        {"key": "DTYPE", "value": "bfloat16"},
-        {"key": "DISABLE_LOG_STATS", "value": "false"},
     ]
 
     mutation = """

@@ -21,7 +21,7 @@ python3 test_endpoint.py
 
 | Step | What happens |
 |------|-------------|
-| `deploy.py` | Creates RunPod template + endpoint with vLLM serving Qwen 2.5 7B on A100 80GB |
+| `deploy.py` | Creates RunPod template + endpoint with vLLM serving Qwen 2.5 7B (or any model) on A100 80GB |
 | `test_endpoint.py` | Sends a chat request and polls for completion |
 | `update_endpoint.py` | Updates existing endpoint to a different image/model |
 
