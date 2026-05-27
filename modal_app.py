@@ -27,14 +27,14 @@ MAX_MODEL_LEN = 8192
 VOLUME_NAME = "dolphin-mixtral-vol"
 MODEL_DIR = "/vol"
 
-GPU_CONFIG = modal.gpu.A10G()
+GPU_CONFIG = "A10G"   # Modal 1.x uses plain strings for GPU specs
 
 # ── Uncomment for full BF16 quality on 2× A100 80 GB (~$7.34/hr) ──────────────
 # MODEL_ID      = "cognitolabs/dolphin-2.5-mixtral-8x7b"
 # QUANTIZATION  = None
 # DTYPE         = "bfloat16"
 # TENSOR_PARALLEL = 2
-# GPU_CONFIG    = modal.gpu.A100(size="80GB", count=2)
+# GPU_CONFIG    = "A100:80GB:2"   # "<type>:<memory>:<count>" in Modal 1.x
 # ──────────────────────────────────────────────────────────────────────────────
 
 # ── Container image ────────────────────────────────────────────────────────────
