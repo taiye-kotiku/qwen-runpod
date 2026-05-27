@@ -92,10 +92,10 @@ def main():
     gpu=GPU_CONFIG,
     volumes={_model_path: vol},
     timeout=600,           # max request lifetime (seconds)
-    container_idle_timeout=300,
+    scaledown_window=300,  # renamed from container_idle_timeout in Modal 1.x
     image=image,
-    allow_concurrent_inputs=64,
 )
+@modal.concurrent(max_inputs=64)  # allow_concurrent_inputs renamed in Modal 1.x
 @modal.asgi_app()
 def serve():  # noqa: C901  (complexity is acceptable for a self-contained server)
     from fastapi import FastAPI, HTTPException
