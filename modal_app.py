@@ -46,7 +46,7 @@ image = (
         "uvicorn[standard]>=0.29.0",
         "huggingface-hub>=0.22.0",
         "hf-xet>=0.1.0",          # replaces deprecated hf-transfer
-        "transformers>=4.44.0",   # 4.44+ requires torch >=2.4; matches vllm 0.6.x
+        "transformers>=4.40.0,<4.44.0",  # 4.44 broke LlamaTokenizer API used by vllm 0.6.x
     )
     .env({"HF_XET_HIGH_PERFORMANCE": "1"})  # replaces deprecated HF_HUB_ENABLE_HF_TRANSFER
 )
