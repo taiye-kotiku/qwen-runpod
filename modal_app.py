@@ -41,14 +41,14 @@ GPU_CONFIG = "A10G"   # Modal 1.x uses plain strings for GPU specs
 image = (
     modal.Image.debian_slim(python_version="3.11")
     .pip_install(
-        "vllm==0.4.3",
+        "vllm>=0.6.0,<0.7.0",     # 0.6.x ships torch 2.4+ (0.4.3 had torch 2.3)
         "fastapi>=0.110.0",
         "uvicorn[standard]>=0.29.0",
         "huggingface-hub>=0.22.0",
-        "hf-transfer>=0.1.6",
-        "transformers>=4.40.0",
+        "hf-xet>=0.1.0",          # replaces deprecated hf-transfer
+        "transformers>=4.44.0",   # 4.44+ requires torch >=2.4; matches vllm 0.6.x
     )
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
+    .env({"HF_XET_HIGH_PERFORMANCE": "1"})  # replaces deprecated HF_HUB_ENABLE_HF_TRANSFER
 )
 
 app = modal.App("dolphin-mixtral-api", image=image)
