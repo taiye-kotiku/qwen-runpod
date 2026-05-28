@@ -20,7 +20,7 @@ from typing import List, Optional
 #  The AWQ model is ~14 GB on disk and loads in < 2 min.
 #
 MODEL_ID = "TheBloke/dolphin-2.5-mixtral-8x7b-AWQ"
-QUANTIZATION = "awq_marlin"  # marlin kernels fit in A10G; plain awq OOMs
+QUANTIZATION = "awq"  # awq_marlin OOMs on A10G (Marlin holds original+converted weights simultaneously)
 DTYPE = "float16"
 TENSOR_PARALLEL = 1
 MAX_MODEL_LEN = 4096  # 8192 KV cache overflows A10G's ~22 GB usable VRAM
