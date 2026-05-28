@@ -23,11 +23,11 @@ MODEL_ID = "TheBloke/dolphin-2.5-mixtral-8x7b-AWQ"
 QUANTIZATION = "awq"  # awq_marlin OOMs on A10G (Marlin holds original+converted weights simultaneously)
 DTYPE = "float16"
 TENSOR_PARALLEL = 1
-MAX_MODEL_LEN = 4096  # 8192 KV cache overflows A10G's ~22 GB usable VRAM
+MAX_MODEL_LEN = 8192
 VOLUME_NAME = "dolphin-mixtral-vol"
 MODEL_DIR = "/vol"
 
-GPU_CONFIG = "A10G"   # Modal 1.x uses plain strings for GPU specs
+GPU_CONFIG = "A100-40GB"  # A10G (22 GB) too small for Mixtral 8x7B AWQ weights
 
 # ── Uncomment for full BF16 quality on 2× A100 80 GB (~$7.34/hr) ──────────────
 # MODEL_ID      = "cognitolabs/dolphin-2.5-mixtral-8x7b"
@@ -116,10 +116,9 @@ def serve():  # noqa: C901  (complexity is acceptable for a self-contained serve
     engine_args = AsyncEngineArgs(
         model=_model_path,
         tensor_parallel_size=TENSOR_PARALLEL,
-        gpu_memory_utilization=0.85,  # 0.92 left no room for KV cache on A10G
+        gpu_memory_utilization=0.92,
         max_model_len=MAX_MODEL_LEN,
         dtype=DTYPE,
-        enforce_eager=True,  # skip CUDA graph compilation to save ~1-2 GB VRAM
         trust_remote_code=True,
         **kwargs,
     )
