@@ -20,10 +20,10 @@ from typing import List, Optional
 #  The AWQ model is ~14 GB on disk and loads in < 2 min.
 #
 MODEL_ID = "TheBloke/dolphin-2.5-mixtral-8x7b-AWQ"
-QUANTIZATION = "awq"
+QUANTIZATION = "awq_marlin"  # marlin kernels fit in A10G; plain awq OOMs
 DTYPE = "float16"
 TENSOR_PARALLEL = 1
-MAX_MODEL_LEN = 8192
+MAX_MODEL_LEN = 4096  # 8192 KV cache overflows A10G's ~22 GB usable VRAM
 VOLUME_NAME = "dolphin-mixtral-vol"
 MODEL_DIR = "/vol"
 
@@ -112,9 +112,10 @@ def serve():  # noqa: C901  (complexity is acceptable for a self-contained serve
     engine_args = AsyncEngineArgs(
         model=_model_path,
         tensor_parallel_size=TENSOR_PARALLEL,
-        gpu_memory_utilization=0.92,
+        gpu_memory_utilization=0.85,  # 0.92 left no room for KV cache on A10G
         max_model_len=MAX_MODEL_LEN,
         dtype=DTYPE,
+        enforce_eager=True,  # skip CUDA graph compilation to save ~1-2 GB VRAM
         trust_remote_code=True,
         **kwargs,
     )
