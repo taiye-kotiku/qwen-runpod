@@ -184,6 +184,13 @@ def serve():  # noqa: C901  (complexity is acceptable for a self-contained serve
     async def health():
         return {"status": "ok", "model": MODEL_ID}
 
+    @web.get("/v1/models")
+    async def models():
+        return {
+            "object": "list",
+            "data": [{"id": "dolphin-mixtral", "object": "model", "owned_by": "custom"}],
+        }
+
     @web.post("/chat")
     async def chat(req: ChatRequest):
         try:
